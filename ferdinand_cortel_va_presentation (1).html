@@ -1,0 +1,2246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferdinand Cortel — VA | Social Media Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        matte: '#050505',
+                        charcoal: '#111111',
+                        accent: '#FFD800',
+                        'accent-dim': '#BFA000',
+                        'text-primary': '#FFFFFF',
+                        'text-secondary': '#BDBDBD',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                        space: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #050505;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #FFD800; border-radius: 3px; }
+
+        /* Grid Background */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(255,216,0,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,216,0,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Glow Effects */
+        .glow-yellow {
+            box-shadow: 0 0 20px rgba(255,216,0,0.15), 0 0 40px rgba(255,216,0,0.05);
+        }
+        .glow-yellow-strong {
+            box-shadow: 0 0 30px rgba(255,216,0,0.3), 0 0 60px rgba(255,216,0,0.1);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255,216,0,0.4);
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(17,17,17,0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,216,0,0.1);
+        }
+        .glass-card {
+            background: rgba(17,17,17,0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,216,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(255,216,0,0.3);
+            box-shadow: 0 0 30px rgba(255,216,0,0.1);
+            transform: translateY(-4px);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes borderRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delay { animation: float 6s ease-in-out 2s infinite; }
+        .animate-float-delay-2 { animation: float 6s ease-in-out 4s infinite; }
+        .animate-slide-up { animation: slideUp 0.8s ease-out forwards; }
+        .animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+        .animate-scale-in { animation: scaleIn 0.6s ease-out forwards; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Neon Border Animation */
+        .neon-border {
+            position: relative;
+            overflow: hidden;
+        }
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #FFD800, transparent, #FFD800, transparent);
+            background-size: 400% 400%;
+            animation: borderRotate 3s linear infinite;
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .neon-border:hover::before {
+            opacity: 1;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            background: rgba(5,5,5,0.9);
+            backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            animation: scaleIn 0.3s ease-out;
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            background: linear-gradient(90deg, #FFD800 0%, #BFA000 100%);
+            height: 100%;
+            border-radius: 999px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Particle Canvas */
+        #particles-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Typing Effect */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #FFD800;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Salary Counter */
+        .counter-value {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Workflow Timeline */
+        .timeline-line {
+            background: linear-gradient(90deg, #FFD800 0%, rgba(255,216,0,0.1) 100%);
+        }
+
+        /* Card Expand */
+        .niche-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .niche-card:hover {
+            transform: scale(1.02);
+        }
+
+        /* Warning Cards */
+        .warning-card {
+            background: rgba(30,10,10,0.6);
+            border: 1px solid rgba(255,50,50,0.2);
+        }
+        .warning-card:hover {
+            border-color: rgba(255,50,50,0.4);
+            box-shadow: 0 0 20px rgba(255,50,50,0.1);
+        }
+
+        /* Advantage Cards */
+        .advantage-card {
+            background: rgba(20,20,5,0.6);
+            border: 1px solid rgba(255,216,0,0.2);
+        }
+        .advantage-card:hover {
+            border-color: rgba(255,216,0,0.4);
+            box-shadow: 0 0 20px rgba(255,216,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+
+        // Particle Background Component
+        const ParticleBackground = () => {
+            const canvasRef = useRef(null);
+
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                let animationId;
+
+                const resize = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+                resize();
+                window.addEventListener('resize', resize);
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.size = Math.random() * 2 + 0.5;
+                        this.speedX = (Math.random() - 0.5) * 0.5;
+                        this.speedY = (Math.random() - 0.5) * 0.5;
+                        this.opacity = Math.random() * 0.5 + 0.1;
+                    }
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x > canvas.width) this.x = 0;
+                        if (this.x < 0) this.x = canvas.width;
+                        if (this.y > canvas.height) this.y = 0;
+                        if (this.y < 0) this.y = canvas.height;
+                    }
+                    draw() {
+                        ctx.fillStyle = `rgba(255, 216, 0, ${this.opacity})`;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                for (let i = 0; i < 80; i++) {
+                    particles.push(new Particle());
+                }
+
+                const animate = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => {
+                        p.update();
+                        p.draw();
+                    });
+
+                    // Draw connections
+                    particles.forEach((p1, i) => {
+                        particles.slice(i + 1).forEach(p2 => {
+                            const dx = p1.x - p2.x;
+                            const dy = p1.y - p2.y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 150) {
+                                ctx.strokeStyle = `rgba(255, 216, 0, ${0.05 * (1 - dist / 150)})`;
+                                ctx.lineWidth = 0.5;
+                                ctx.beginPath();
+                                ctx.moveTo(p1.x, p1.y);
+                                ctx.lineTo(p2.x, p2.y);
+                                ctx.stroke();
+                            }
+                        });
+                    });
+
+                    animationId = requestAnimationFrame(animate);
+                };
+                animate();
+
+                return () => {
+                    cancelAnimationFrame(animationId);
+                    window.removeEventListener('resize', resize);
+                };
+            }, []);
+
+            return <canvas id="particles-canvas" ref={canvasRef} />;
+        };
+
+        // Navigation
+        const Navigation = () => {
+            const [scrolled, setScrolled] = useState(false);
+            const [mobileOpen, setMobileOpen] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const navLinks = [
+                { label: 'Hero', href: '#hero' },
+                { label: 'Introduction', href: '#intro' },
+                { label: 'What is VA', href: '#what-is-va' },
+                { label: 'VA Niches', href: '#niches' },
+                { label: 'Career Path', href: '#career' },
+                { label: 'Tasks', href: '#tasks' },
+                { label: 'Reality', href: '#reality' },
+                { label: 'Payment', href: '#payment' },
+                { label: 'Salary', href: '#salary' },
+                { label: 'Closing', href: '#closing' },
+            ];
+
+            return (
+                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'py-6 bg-transparent'}`}>
+                    <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+                        <a href="#hero" className="font-poppins font-bold text-xl tracking-tight">
+                            <span className="text-accent">F</span>erdinand <span className="text-accent">C</span>ortel
+                        </a>
+
+                        <div className="hidden lg:flex items-center gap-8">
+                            {navLinks.map(link => (
+                                <a key={link.href} href={link.href} className="text-sm text-text-secondary hover:text-accent transition-colors duration-300 font-medium">
+                                    {link.label}
+                                </a>
+                            ))}
+                        </div>
+
+                        <button 
+                            className="lg:hidden text-white"
+                            onClick={() => setMobileOpen(!mobileOpen)}
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {mobileOpen ? (
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                ) : (
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                )}
+                            </svg>
+                        </button>
+                    </div>
+
+                    {mobileOpen && (
+                        <div className="lg:hidden glass mt-2 mx-4 rounded-2xl p-4 animate-scale-in">
+                            {navLinks.map(link => (
+                                <a 
+                                    key={link.href} 
+                                    href={link.href} 
+                                    className="block py-3 px-4 text-text-secondary hover:text-accent hover:bg-white/5 rounded-lg transition-all"
+                                    onClick={() => setMobileOpen(false)}
+                                >
+                                    {link.label}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                </nav>
+            );
+        };
+
+        // Hero Section
+        const HeroSection = () => {
+            const [counters, setCounters] = useState({ industry: 0, remote: 0, careers: 0 });
+
+            useEffect(() => {
+                const duration = 2000;
+                const steps = 60;
+                const interval = duration / steps;
+                let step = 0;
+
+                const timer = setInterval(() => {
+                    step++;
+                    const progress = step / steps;
+                    const easeOut = 1 - Math.pow(1 - progress, 3);
+
+                    setCounters({
+                        industry: Math.floor(25 * easeOut),
+                        remote: Math.floor(100 * easeOut),
+                        careers: Math.floor(50 * easeOut),
+                    });
+
+                    if (step >= steps) clearInterval(timer);
+                }, interval);
+
+                return () => clearInterval(timer);
+            }, []);
+
+            return (
+                <section id="hero" className="min-h-screen flex items-center relative grid-bg pt-20">
+                    <div className="max-w-7xl mx-auto px-6 py-20 w-full">
+                        <div className="grid lg:grid-cols-2 gap-12 items-center">
+                            <div className="animate-slide-up">
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border-accent/20 mb-8">
+                                    <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                                    <span className="text-sm font-medium text-accent">Ferdinand Cortel — VA | Social Media Manager | Digital Professional</span>
+                                </div>
+
+                                <h1 className="font-poppins font-black text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6">
+                                    CAREER PATHWAYS IN <br />
+                                    <span className="text-accent text-glow">VIRTUAL ASSISTANCE</span><br />
+                                    FOR IT/CS GRADUATES
+                                </h1>
+
+                                <p className="text-text-secondary text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
+                                    How Filipino IT & CS Students Can Build Global Careers Through Virtual Assistance, Freelancing, Tech Support, Automation, Social Media Management, and AI-Powered Services.
+                                </p>
+
+                                <div className="flex flex-wrap gap-4">
+                                    <a href="#niches" className="px-8 py-4 bg-accent text-matte font-bold rounded-full hover:bg-accent-dim transition-all duration-300 hover:scale-105 glow-yellow-strong">
+                                        View Seminar Topics
+                                    </a>
+                                    <a href="#niches" className="px-8 py-4 glass text-white font-bold rounded-full hover:border-accent/40 transition-all duration-300 hover:scale-105">
+                                        Explore VA Niches
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className="relative hidden lg:block">
+                                <div className="relative w-full aspect-square max-w-lg mx-auto">
+                                    {/* Floating Elements */}
+                                    <div className="absolute top-10 right-10 glass-card p-4 rounded-2xl animate-float z-10">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
+                                                <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <div className="text-2xl font-bold text-accent">${counters.industry}B</div>
+                                                <div className="text-xs text-text-secondary">Global VA Industry</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute bottom-20 left-0 glass-card p-4 rounded-2xl animate-float-delay z-10">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
+                                                <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <div className="text-2xl font-bold text-accent">{counters.remote}%</div>
+                                                <div className="text-xs text-text-secondary">Remote Global Opportunities</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute top-1/2 right-0 glass-card p-4 rounded-2xl animate-float-delay-2 z-10">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
+                                                <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <div className="text-2xl font-bold text-accent">{counters.careers}K+</div>
+                                                <div className="text-xs text-text-secondary">High-Income Digital Careers</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Central Visual */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-64 h-64 md:w-80 md:h-80 rounded-full border-2 border-accent/20 relative animate-pulse-glow">
+                                            <div className="absolute inset-4 rounded-full border border-accent/10"></div>
+                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                <div className="w-48 h-48 rounded-2xl glass glow-yellow flex items-center justify-center">
+                                                    <svg className="w-24 h-24 text-accent/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Scroll Indicator */}
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+                        <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                        </svg>
+                    </div>
+                </section>
+            );
+        };
+
+        // Intro / Hook Section
+        const IntroSection = () => {
+            const questions = [
+                "What is a Virtual Assistant?",
+                "Can IT/CS students succeed in freelancing?",
+                "Can remote work become a real career?"
+            ];
+
+            return (
+                <section id="intro" className="py-24 relative">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal">
+                            <h2 className="font-poppins font-bold text-3xl md:text-5xl mb-4">The Digital Career Revolution</h2>
+                            <div className="w-24 h-1 bg-accent mx-auto rounded-full"></div>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-6 mb-16">
+                            {questions.map((q, i) => (
+                                <div key={i} className="glass-card p-8 rounded-3xl reveal" style={{transitionDelay: `${i * 150}ms`}}>
+                                    <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-6">
+                                        <span className="text-accent font-bold text-xl">0{i + 1}</span>
+                                    </div>
+                                    <h3 className="font-space text-xl font-semibold mb-2">{q}</h3>
+                                    <div className="w-12 h-0.5 bg-accent/30 mt-4"></div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="glass-card p-8 md:p-12 rounded-3xl reveal border-accent/30 glow-yellow">
+                            <div className="flex items-start gap-6">
+                                <div className="hidden md:flex w-16 h-16 rounded-2xl bg-accent/20 items-center justify-center flex-shrink-0">
+                                    <svg className="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="font-poppins text-xl md:text-2xl lg:text-3xl font-medium leading-relaxed text-white">
+                                        "Everything you are studying right now is already a <span className="text-accent font-bold">competitive advantage</span> in the global digital economy."
+                                    </p>
+                                    <div className="mt-6 flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-accent/20"></div>
+                                        <div>
+                                            <div className="font-semibold">Ferdinand Cortel</div>
+                                            <div className="text-sm text-text-secondary">VA & Social Media Manager</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // What is VA Section
+        const WhatIsVASection = () => {
+            const features = [
+                {
+                    icon: (
+                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+                        </svg>
+                    ),
+                    title: "Remote Work",
+                    desc: "Work from anywhere with an internet connection. No commute, no office politics, just pure productivity."
+                },
+                {
+                    icon: (
+                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    ),
+                    title: "Digital Services",
+                    desc: "Provide technical, creative, and administrative services through digital platforms and cloud-based tools."
+                },
+                {
+                    icon: (
+                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    ),
+                    title: "Foreign Currency Income",
+                    desc: "Earn in USD, EUR, or GBP while living in the Philippines. Maximize your purchasing power."
+                }
+            ];
+
+            return (
+                <section id="what-is-va" className="py-24 relative grid-bg">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="grid lg:grid-cols-2 gap-16 items-center">
+                            <div className="reveal">
+                                <div className="inline-block px-4 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-6">
+                                    EDUCATION
+                                </div>
+                                <h2 className="font-poppins font-bold text-3xl md:text-5xl mb-6">
+                                    What is a <span className="text-accent">Virtual Assistant</span>?
+                                </h2>
+
+                                <div className="space-y-6 text-text-secondary leading-relaxed">
+                                    <p className="text-lg">
+                                        A <strong className="text-white">Virtual Assistant (VA)</strong> is a remote professional who provides administrative, technical, or creative assistance to clients from a home office or co-working space.
+                                    </p>
+                                    <p>
+                                        Unlike traditional employees, VAs operate as independent contractors or agency staff, serving multiple clients across different time zones using digital collaboration tools.
+                                    </p>
+                                    <p>
+                                        For IT and CS students, this career path transforms your technical knowledge into a <span className="text-accent font-semibold">marketable service</span> that global clients pay premium rates for.
+                                    </p>
+                                </div>
+
+                                <div className="mt-8 flex items-center gap-4">
+                                    <div className="flex -space-x-3">
+                                        {[1,2,3,4].map(i => (
+                                            <div key={i} className="w-10 h-10 rounded-full bg-charcoal border-2 border-matte flex items-center justify-center text-xs font-bold">
+                                                {['US', 'UK', 'AU', 'CA'][i-1]}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <span className="text-sm text-text-secondary">Serving clients from 50+ countries</span>
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
+                                {features.map((f, i) => (
+                                    <div key={i} className="glass-card p-6 rounded-2xl reveal flex items-start gap-5" style={{transitionDelay: `${i * 200}ms`}}>
+                                        <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                                            {f.icon}
+                                        </div>
+                                        <div>
+                                            <h3 className="font-space text-xl font-bold mb-2">{f.title}</h3>
+                                            <p className="text-text-secondary">{f.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+
+                                <div className="glass-card p-6 rounded-2xl reveal border-accent/20" style={{transitionDelay: '600ms'}}>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <span className="font-semibold">Global Freelancing Ecosystem</span>
+                                        <span className="text-accent font-bold">Active</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        {['Upwork', 'LinkedIn', 'Fiverr', 'OnlineJobs.ph'].map((p, i) => (
+                                            <span key={i} className="px-3 py-1 rounded-full bg-white/5 text-xs text-text-secondary border border-white/10">
+                                                {p}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // VA Niches Section
+        const NichesSection = () => {
+            const [activeModal, setActiveModal] = useState(null);
+
+            const niches = [
+                {
+                    id: 1,
+                    title: "Tech VA / IT Support VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    ),
+                    salary: "$800 - $2,500",
+                    demand: "High",
+                    summary: "Provide technical support, troubleshoot software issues, and manage IT infrastructure for remote teams.",
+                    details: {
+                        role: "Handles technical troubleshooting, software installation, system maintenance, and basic network administration for clients.",
+                        tasks: ["Software troubleshooting", "System updates & patches", "Network diagnostics", "Security monitoring", "Hardware coordination"],
+                        tools: ["TeamViewer", "AnyDesk", "Zendesk", "Freshservice", "Splashtop"],
+                        learning: "CompTIA A+ fundamentals, basic networking, Windows/Mac administration, ticketing systems",
+                        advantage: "Your CS/IT background gives you immediate credibility. You understand systems, networks, and troubleshooting logic that general VAs lack.",
+                        income: "$800 - $2,500/month depending on specialization level",
+                        freelance: "Direct client work via Upwork/LinkedIn at $15-35/hour",
+                        agency: "IT support agencies offer $600-1,500/month with benefits",
+                        growth: "Can evolve into Systems Administrator, IT Manager, or Technical Consultant roles"
+                    }
+                },
+                {
+                    id: 2,
+                    title: "Web Development VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                    ),
+                    salary: "$1,200 - $4,000",
+                    demand: "Very High",
+                    summary: "Build, maintain, and optimize websites using WordPress, Shopify, or custom code for global clients.",
+                    details: {
+                        role: "Develops and maintains websites, landing pages, e-commerce stores, and web applications for businesses.",
+                        tasks: ["WordPress/Shopify development", "Landing page creation", "Bug fixes & updates", "Performance optimization", "Plugin management"],
+                        tools: ["WordPress", "Shopify", "VS Code", "Figma", "GitHub", "Elementor"],
+                        learning: "HTML/CSS/JS fundamentals, WordPress ecosystem, responsive design, basic SEO",
+                        advantage: "CS students already know programming logic. Web dev VA work bridges academic coding with commercial application.",
+                        income: "$1,200 - $4,000/month for ongoing maintenance + project fees",
+                        freelance: "$25-75/hour on Upwork, $500-5,000 per project",
+                        agency: "Web agencies offer $1,000-3,000/month retainers",
+                        growth: "Full-stack developer, Technical Lead, or Agency Owner"
+                    }
+                },
+                {
+                    id: 3,
+                    title: "Automation / Systems VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    ),
+                    salary: "$1,500 - $5,000",
+                    demand: "Very High",
+                    summary: "Design automated workflows using Zapier, Make, and custom scripts to streamline business operations.",
+                    details: {
+                        role: "Creates automated workflows that connect apps, eliminate manual tasks, and streamline business processes.",
+                        tasks: ["Zapier/Make automation", "CRM automation", "Email sequences", "Data pipeline setup", "API integrations"],
+                        tools: ["Zapier", "Make (Integromat)", "n8n", "Airtable", "Google Apps Script"],
+                        learning: "Workflow logic, API basics, conditional logic, data mapping, business process analysis",
+                        advantage: "IT students understand logic flows, APIs, and data structures — the core of automation engineering.",
+                        income: "$1,500 - $5,000/month for advanced automation setups",
+                        freelance: "$50-150/hour for consultation and implementation",
+                        agency: "Automation agencies pay $1,500-4,000/month",
+                        growth: "Automation Engineer, Business Systems Architect, or SaaS Founder"
+                    }
+                },
+                {
+                    id: 4,
+                    title: "CRM & Database Management VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                        </svg>
+                    ),
+                    salary: "$900 - $2,800",
+                    demand: "High",
+                    summary: "Manage customer databases, CRM platforms, and data integrity for sales and marketing teams.",
+                    details: {
+                        role: "Maintains CRM systems, cleans and segments data, creates reports, and ensures data accuracy for sales teams.",
+                        tasks: ["CRM data entry & cleanup", "Contact segmentation", "Pipeline management", "Report generation", "Data validation"],
+                        tools: ["HubSpot", "Salesforce", "Pipedrive", "Airtable", "Notion", "Zoho"],
+                        learning: "CRM fundamentals, data hygiene practices, SQL basics, spreadsheet mastery",
+                        advantage: "Database management and data structures are core CS topics. You understand relational logic naturally.",
+                        income: "$900 - $2,800/month depending on CRM complexity",
+                        freelance: "$20-45/hour for CRM management",
+                        agency: "CRM agencies offer $800-2,000/month",
+                        growth: "CRM Administrator, Data Analyst, or Revenue Operations Specialist"
+                    }
+                },
+                {
+                    id: 5,
+                    title: "Social Media Manager",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                        </svg>
+                    ),
+                    salary: "$800 - $3,000",
+                    demand: "Very High",
+                    summary: "Create content, manage communities, and grow brand presence across social platforms.",
+                    details: {
+                        role: "Plans, creates, and manages social media content across platforms to build brand awareness and engagement.",
+                        tasks: ["Content calendar planning", "Graphic design", "Community management", "Analytics reporting", "Ad campaign setup"],
+                        tools: ["Canva", "Meta Business Suite", "Buffer", "Hootsuite", "Later", "CapCut"],
+                        learning: "Content strategy, platform algorithms, basic design, copywriting, analytics interpretation",
+                        advantage: "Tech-savvy SMMs who understand analytics, automation tools, and API integrations are in premium demand.",
+                        income: "$800 - $3,000/month per client",
+                        freelance: "$500-2,000/month retainer per brand",
+                        agency: "Social agencies pay $600-2,500/month",
+                        growth: "Head of Social, Brand Manager, or Digital Marketing Director"
+                    }
+                },
+                {
+                    id: 6,
+                    title: "AI Tools / Prompt Engineer VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    ),
+                    salary: "$1,500 - $6,000",
+                    demand: "Extremely High",
+                    summary: "Leverage ChatGPT, Claude, and AI tools to automate content, research, and business processes.",
+                    details: {
+                        role: "Uses AI tools to generate content, automate tasks, build chatbots, and optimize business workflows with cutting-edge technology.",
+                        tasks: ["Prompt engineering", "AI content generation", "Chatbot setup", "Workflow automation with AI", "AI tool training"],
+                        tools: ["ChatGPT", "Claude", "Midjourney", "Zapier AI", "Make", "Voiceflow"],
+                        learning: "Prompt engineering, AI tool mastery, API integrations, automation logic, content frameworks",
+                        advantage: "IT/CS students understand API calls, JSON, and system architecture — critical for advanced AI implementations.",
+                        income: "$1,500 - $6,000/month for AI-specialized VAs",
+                        freelance: "$75-200/hour for AI consultation",
+                        agency: "AI agencies offer $2,000-5,000/month",
+                        growth: "AI Consultant, Automation Architect, or AI Product Manager"
+                    }
+                },
+                {
+                    id: 7,
+                    title: "Video Editing & Content Production VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                    ),
+                    salary: "$700 - $2,500",
+                    demand: "High",
+                    summary: "Edit videos, create thumbnails, and produce multimedia content for creators and brands.",
+                    details: {
+                        role: "Edits video content, creates graphics, manages content libraries, and produces multimedia assets for brands and creators.",
+                        tasks: ["Video editing", "Thumbnail creation", "Subtitling", "Content repurposing", "YouTube management"],
+                        tools: ["Adobe Premiere", "CapCut", "Canva", "After Effects", "Descript"],
+                        learning: "Video editing basics, color grading, audio mixing, platform specs, content trends",
+                        advantage: "Technical understanding of codecs, rendering, and file formats gives you an edge over creative-only editors.",
+                        income: "$700 - $2,500/month depending on volume",
+                        freelance: "$20-60/hour or $200-1,000 per video",
+                        agency: "Content agencies pay $600-2,000/month",
+                        growth: "Senior Editor, Creative Director, or Content Agency Owner"
+                    }
+                },
+                {
+                    id: 8,
+                    title: "E-commerce VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                    ),
+                    salary: "$800 - $2,800",
+                    demand: "High",
+                    summary: "Manage online stores, product listings, inventory, and customer service for e-commerce brands.",
+                    details: {
+                        role: "Manages product listings, inventory, order fulfillment, customer service, and store optimization for e-commerce businesses.",
+                        tasks: ["Product listing optimization", "Inventory management", "Order processing", "Customer service", "Store maintenance"],
+                        tools: ["Shopify", "Amazon Seller Central", "eBay", "WooCommerce", "Oberlo", "DSers"],
+                        learning: "E-commerce platforms, SEO basics, customer service, inventory systems, dropshipping",
+                        advantage: "Understanding of databases, APIs, and automation makes you invaluable for scaling e-commerce operations.",
+                        income: "$800 - $2,800/month for store management",
+                        freelance: "$15-40/hour for e-commerce tasks",
+                        agency: "E-com agencies offer $700-2,500/month",
+                        growth: "E-commerce Manager, Operations Director, or Store Owner"
+                    }
+                },
+                {
+                    id: 9,
+                    title: "General VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0124 12c0-3.259-.814-6.37-2.232-9.06a1 1 0 00-1.768 0c-1.232 2.36-2.232 5.43-2.232 9.06 0 1.422.363 2.774 1.014 3.95M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    ),
+                    salary: "$500 - $1,500",
+                    demand: "Moderate",
+                    summary: "Handle emails, scheduling, research, and general administrative tasks for busy professionals.",
+                    details: {
+                        role: "Provides general administrative support including email management, scheduling, research, data entry, and document preparation.",
+                        tasks: ["Email management", "Calendar scheduling", "Travel research", "Data entry", "Document preparation"],
+                        tools: ["Gmail", "Google Workspace", "Microsoft Office", "Calendly", "Notion"],
+                        learning: "Office productivity, email etiquette, time management, research skills, communication",
+                        advantage: "Even general VA work benefits from tech skills — automation of routine tasks sets you apart.",
+                        income: "$500 - $1,500/month starting range",
+                        freelance: "$8-20/hour on general platforms",
+                        agency: "VA agencies pay $400-1,200/month",
+                        growth: "Executive Assistant, Operations Manager, or Specialized VA"
+                    }
+                },
+                {
+                    id: 10,
+                    title: "Executive Assistant VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    ),
+                    salary: "$1,000 - $3,500",
+                    demand: "High",
+                    summary: "High-level support for executives including project management, communication, and strategic coordination.",
+                    details: {
+                        role: "Provides high-level administrative support to executives, handling sensitive communications, project coordination, and strategic tasks.",
+                        tasks: ["Inbox & calendar management", "Meeting coordination", "Travel planning", "Expense reporting", "Project tracking"],
+                        tools: ["Notion", "Asana", "Monday.com", "Slack", "Zoom", "Expensify"],
+                        learning: "Executive communication, project management, discretion, prioritization, stakeholder management",
+                        advantage: "Technical EAs who can automate reports, build dashboards, and manage tech stacks are premium hires.",
+                        income: "$1,000 - $3,500/month for experienced EAs",
+                        freelance: "$25-60/hour for executive support",
+                        agency: "Executive support firms pay $1,200-3,000/month",
+                        growth: "Chief of Staff, Operations Director, or Business Manager"
+                    }
+                },
+                {
+                    id: 11,
+                    title: "Appointment Setter",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    ),
+                    salary: "$600 - $2,000",
+                    demand: "High",
+                    summary: "Schedule meetings, qualify leads, and manage sales calendars for businesses and agencies.",
+                    details: {
+                        role: "Contacts leads, qualifies prospects, and schedules appointments for sales teams, often working closely with CRM systems.",
+                        tasks: ["Cold calling", "Lead qualification", "Calendar booking", "CRM updates", "Follow-up sequences"],
+                        tools: ["Calendly", "HubSpot", "Salesforce", "Apollo", "LinkedIn Sales Navigator", "Aircall"],
+                        learning: "Sales basics, communication skills, CRM navigation, lead scoring, objection handling",
+                        advantage: "Technical appointment setters who understand CRM automation and data workflows deliver better results.",
+                        income: "$600 - $2,000/month + commission potential",
+                        freelance: "$12-30/hour or commission-based",
+                        agency: "Sales agencies offer $500-1,800/month + bonuses",
+                        growth: "Sales Development Rep, Account Executive, or Sales Manager"
+                    }
+                },
+                {
+                    id: 12,
+                    title: "Customer Support VA",
+                    icon: (
+                        <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    ),
+                    salary: "$500 - $1,800",
+                    demand: "Very High",
+                    summary: "Handle customer inquiries, tickets, and live chat support for global brands and SaaS companies.",
+                    details: {
+                        role: "Responds to customer inquiries via email, chat, and tickets, resolves issues, and maintains customer satisfaction scores.",
+                        tasks: ["Ticket resolution", "Live chat support", "Email responses", "Knowledge base updates", "Escalation management"],
+                        tools: ["Zendesk", "Intercom", "Freshdesk", "Help Scout", "LiveChat", "Slack"],
+                        learning: "Customer service principles, product knowledge, ticketing systems, communication tone, conflict resolution",
+                        advantage: "Tech-savvy support agents who understand APIs, integrations, and can debug basic issues are premium assets.",
+                        income: "$500 - $1,800/month for dedicated support roles",
+                        freelance: "$10-25/hour for support work",
+                        agency: "BPO agencies pay $450-1,500/month",
+                        growth: "Support Lead, Customer Success Manager, or Technical Support Engineer"
+                    }
+                }
+            ];
+
+            const getDemandColor = (demand) => {
+                switch(demand) {
+                    case 'Extremely High': return 'bg-red-500';
+                    case 'Very High': return 'bg-accent';
+                    case 'High': return 'bg-yellow-500';
+                    default: return 'bg-blue-500';
+                }
+            };
+
+            return (
+                <section id="niches" className="py-24 relative">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal">
+                            <div className="inline-block px-4 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-6">
+                                SPECIALIZATIONS
+                            </div>
+                            <h2 className="font-poppins font-bold text-3xl md:text-5xl mb-4">
+                                VA <span className="text-accent">Niches</span> & Specializations
+                            </h2>
+                            <p className="text-text-secondary max-w-2xl mx-auto text-lg">
+                                Click any card to explore detailed career pathways, tools, and income potential
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                            {niches.map((niche, i) => (
+                                <div 
+                                    key={niche.id}
+                                    className="glass-card niche-card p-6 rounded-2xl cursor-pointer reveal group"
+                                    style={{transitionDelay: `${(i % 4) * 100}ms`}}
+                                    onClick={() => setActiveModal(niche)}
+                                >
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent group-hover:bg-accent/20 transition-colors">
+                                            {niche.icon}
+                                        </div>
+                                        <div className={`px-2 py-1 rounded-full text-xs font-bold text-matte ${getDemandColor(niche.demand)}`}>
+                                            {niche.demand}
+                                        </div>
+                                    </div>
+
+                                    <h3 className="font-space text-lg font-bold mb-2 group-hover:text-accent transition-colors">
+                                        {niche.title}
+                                    </h3>
+                                    <p className="text-text-secondary text-sm mb-4 line-clamp-2">
+                                        {niche.summary}
+                                    </p>
+
+                                    <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                                        <span className="text-accent font-bold text-sm">{niche.salary}</span>
+                                        <span className="text-xs text-text-secondary flex items-center gap-1">
+                                            Explore 
+                                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Modal */}
+                    {activeModal && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay" onClick={() => setActiveModal(null)}>
+                            <div className="glass modal-content w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 md:p-10 border border-accent/20" onClick={e => e.stopPropagation()}>
+                                <div className="flex items-start justify-between mb-8">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent">
+                                            {activeModal.icon}
+                                        </div>
+                                        <div>
+                                            <h3 className="font-poppins text-2xl font-bold">{activeModal.title}</h3>
+                                            <span className="text-accent font-bold">{activeModal.salary}/month</span>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        onClick={() => setActiveModal(null)}
+                                        className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div className="space-y-8">
+                                    <div className="glass-card p-6 rounded-2xl">
+                                        <h4 className="font-space font-bold text-lg mb-3 text-accent">What This Role Does</h4>
+                                        <p className="text-text-secondary">{activeModal.details.role}</p>
+                                    </div>
+
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div className="glass-card p-6 rounded-2xl">
+                                            <h4 className="font-space font-bold text-lg mb-4 text-accent">Daily Tasks</h4>
+                                            <ul className="space-y-2">
+                                                {activeModal.details.tasks.map((task, i) => (
+                                                    <li key={i} className="flex items-center gap-3 text-sm text-text-secondary">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                                                        {task}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        <div className="glass-card p-6 rounded-2xl">
+                                            <h4 className="font-space font-bold text-lg mb-4 text-accent">Recommended Tools</h4>
+                                            <div className="flex flex-wrap gap-2">
+                                                {activeModal.details.tools.map((tool, i) => (
+                                                    <span key={i} className="px-3 py-1.5 rounded-lg bg-accent/10 text-accent text-sm font-medium border border-accent/10">
+                                                        {tool}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="glass-card p-6 rounded-2xl border-accent/20">
+                                        <h4 className="font-space font-bold text-lg mb-3 text-accent">Why IT/CS Students Have an Advantage</h4>
+                                        <p className="text-text-secondary">{activeModal.details.advantage}</p>
+                                    </div>
+
+                                    <div className="grid md:grid-cols-3 gap-4">
+                                        <div className="glass-card p-5 rounded-xl text-center">
+                                            <div className="text-2xl font-bold text-accent mb-1">{activeModal.details.income}</div>
+                                            <div className="text-xs text-text-secondary">Expected Income</div>
+                                        </div>
+                                        <div className="glass-card p-5 rounded-xl text-center">
+                                            <div className="text-sm font-bold text-white mb-1">{activeModal.details.freelance}</div>
+                                            <div className="text-xs text-text-secondary">Freelance Rate</div>
+                                        </div>
+                                        <div className="glass-card p-5 rounded-xl text-center">
+                                            <div className="text-sm font-bold text-white mb-1">{activeModal.details.agency}</div>
+                                            <div className="text-xs text-text-secondary">Agency Rate</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="glass-card p-6 rounded-2xl">
+                                        <h4 className="font-space font-bold text-lg mb-3 text-accent">Career Growth Potential</h4>
+                                        <p className="text-text-secondary">{activeModal.details.growth}</p>
+                                    </div>
+
+                                    <div className="glass-card p-6 rounded-2xl">
+                                        <h4 className="font-space font-bold text-lg mb-3 text-accent">Beginner Learning Path</h4>
+                                        <p className="text-text-secondary">{activeModal.details.learning}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </section>
+            );
+        };
+
+        // Career Pathways Section
+        const CareerPathSection = () => {
+            const freelanceSteps = [
+                { title: "Learn Skills", desc: "Master 2-3 core VA skills" },
+                { title: "Build Portfolio", desc: "Create sample projects" },
+                { title: "Apply", desc: "Send proposals daily" },
+                { title: "Land Clients", desc: "Close your first deals" },
+                { title: "Scale Income", desc: "Raise rates & add clients" }
+            ];
+
+            return (
+                <section id="career" className="py-24 relative grid-bg">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal">
+                            <div className="inline-block px-4 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-6">
+                                YOUR FUTURE
+                            </div>
+                            <h2 className="font-poppins font-bold text-3xl md:text-5xl mb-4">
+                                Career <span className="text-accent">Pathways</span>
+                            </h2>
+                        </div>
+
+                        <div className="grid lg:grid-cols-2 gap-8">
+                            {/* Freelance Route */}
+                            <div className="glass-card p-8 md:p-10 rounded-3xl reveal">
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent">
+                                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-space text-2xl font-bold">Freelance Route</h3>
+                                        <p className="text-text-secondary text-sm">Independent & Self-Directed</p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-6 mb-8">
+                                    {[
+                                        { name: "Upwork", type: "Global freelance marketplace" },
+                                        { name: "OnlineJobs.ph", type: "Philippines-focused remote work" },
+                                        { name: "LinkedIn", type: "Professional networking & direct outreach" },
+                                        { name: "Freelancer.com", type: "Project-based bidding platform" },
+                                        { name: "Cold Outreach", type: "Direct email & LinkedIn prospecting" }
+                                    ].map((platform, i) => (
+                                        <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                                            <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent font-bold text-sm">
+                                                {platform.name[0]}
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold">{platform.name}</div>
+                                                <div className="text-xs text-text-secondary">{platform.type}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="space-y-3 mb-8">
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-text-secondary">Freedom Level</span>
+                                        <span className="text-accent font-bold">Maximum</span>
+                                    </div>
+                                    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                                        <div className="h-full bg-accent rounded-full" style={{width: '95%'}}></div>
+                                    </div>
+
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-text-secondary">Income Potential</span>
+                                        <span className="text-accent font-bold">Unlimited</span>
+                                    </div>
+                                    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                                        <div className="h-full bg-accent rounded-full" style={{width: '90%'}}></div>
+                                    </div>
+
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-text-secondary">Skill Growth</span>
+                                        <span className="text-accent font-bold">Rapid</span>
+                                    </div>
+                                    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                                        <div className="h-full bg-accent rounded-full" style={{width: '85%'}}></div>
+                                    </div>
+                                </div>
+
+                                <div className="p-4 rounded-xl bg-accent/5 border border-accent/10">
+                                    <div className="text-xs text-text-secondary mb-3">FREELANCE WORKFLOW</div>
+                                    <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                                        {freelanceSteps.map((step, i) => (
+                                            <React.Fragment key={i}>
+                                                <div className="flex-shrink-0 px-3 py-2 rounded-lg bg-white/5 text-xs font-medium text-center min-w-[80px]">
+                                                    <div className="text-accent font-bold">{step.title}</div>
+                                                </div>
+                                                {i < freelanceSteps.length - 1 && (
+                                                    <svg className="w-4 h-4 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                )}
+                                            </React.Fragment>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Agency Route */}
+                            <div className="glass-card p-8 md:p-10 rounded-3xl reveal">
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-white">
+                                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-space text-2xl font-bold">Agency Route</h3>
+                                        <p className="text-text-secondary text-sm">Structured & Supported</p>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-6 mb-8">
+                                    {[
+                                        { name: "VA Agencies", type: "Full-service virtual assistant firms" },
+                                        { name: "Remote Staff", type: "Dedicated remote staffing companies" },
+                                        { name: "Virtual Staff", type: "Philippine-based outsourcing firms" },
+                                        { name: "Structured Training", type: "Agencies with onboarding programs" }
+                                    ].map((platform, i) => (
+                                        <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                                            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white font-bold text-sm">
+                                                {platform.name[0]}
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold">{platform.name}</div>
+                                                <div className="text-xs text-text-secondary">{platform.type}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="space-y-3 mb-8">
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-text-secondary">Stability</span>
+                                        <span className="text-white font-bold">High</span>
+                                    </div>
+                                    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                                        <div className="h-full bg-white rounded-full" style={{width: '85%'}}></div>
+                                    </div>
+
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-text-secondary">Barrier to Entry</span>
+                                        <span className="text-white font-bold">Lower</span>
+                                    </div>
+                                    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                                        <div className="h-full bg-white rounded-full" style={{width: '70%'}}></div>
+                                    </div>
+
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-text-secondary">Payroll Setup</span>
+                                        <span className="text-white font-bold">Included</span>
+                                    </div>
+                                    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                                        <div className="h-full bg-white rounded-full" style={{width: '95%'}}></div>
+                                    </div>
+                                </div>
+
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                                    <div className="text-xs text-text-secondary mb-3">AGENCY COMMISSION STRUCTURE</div>
+                                    <div className="flex items-center justify-between">
+                                        <div className="text-center">
+                                            <div className="text-2xl font-bold text-white">Client Pays</div>
+                                            <div className="text-xs text-text-secondary">$1,500/month</div>
+                                        </div>
+                                        <svg className="w-6 h-6 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                        </svg>
+                                        <div className="text-center">
+                                            <div className="text-2xl font-bold text-accent">You Receive</div>
+                                            <div className="text-xs text-text-secondary">$1,200/month</div>
+                                        </div>
+                                    </div>
+                                    <div className="mt-3 text-center text-xs text-text-secondary">
+                                        Agency takes 20% for client acquisition, training, and support
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Common Tasks Section
+        const TasksSection = () => {
+            const [activeTaskModal, setActiveTaskModal] = useState(null);
+
+            const tasks = [
+                {
+                    name: "Email Management",
+                    icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+                    color: "bg-blue-500/10 text-blue-400",
+                    frequency: "Daily",
+                    difficulty: "Beginner",
+                    details: {
+                        overview: "Email Management is the cornerstone of virtual assistance. As a VA, you will handle your client's inbox — sorting, prioritizing, responding to routine inquiries, flagging urgent matters, and maintaining zero inbox status.",
+                        responsibilities: [
+                            "Sort and categorize incoming emails by priority and topic",
+                            "Draft and send routine responses using templates",
+                            "Flag urgent emails requiring client attention",
+                            "Unsubscribe from spam and clean up mailing lists",
+                            "Schedule follow-up reminders",
+                            "Organize emails into folders/labels",
+                            "Filter newsletters and promotional content"
+                        ],
+                        tools: [
+                            { name: "Gmail", desc: "Most common client email platform" },
+                            { name: "Outlook", desc: "Enterprise email management" },
+                            { name: "Superhuman", desc: "Speed-focused email client" },
+                            { name: "Boomerang", desc: "Email scheduling & reminders" },
+                            { name: "SaneBox", desc: "AI-powered email filtering" },
+                            { name: "Mailbutler", desc: "Email tracking & templates" }
+                        ],
+                        workflow: [
+                            "Morning sweep — check overnight emails (15 min)",
+                            "Categorize — label as Urgent, FYI, or Action Required",
+                            "Respond — handle routine inquiries with templates (30 min)",
+                            "Escalate — flag items needing client decision",
+                            "Afternoon check — process new emails (15 min)",
+                            "End-of-day cleanup — archive, snooze, or schedule"
+                        ],
+                        tips: "Create a color-coded labeling system. Use 'EOD Summary' emails to keep clients informed without overwhelming them. Set up filters to auto-sort newsletters and low-priority mail.",
+                        timeEstimate: "1-2 hours per day for a busy executive inbox",
+                        valueProposition: "Saves clients 5-10 hours weekly, allowing them to focus on high-value decisions instead of inbox triage."
+                    }
+                },
+                {
+                    name: "CRM Updates",
+                    icon: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4",
+                    color: "bg-purple-500/10 text-purple-400",
+                    frequency: "Daily",
+                    difficulty: "Intermediate",
+                    details: {
+                        overview: "CRM (Customer Relationship Management) Updates involve maintaining accurate client data, tracking interactions, updating deal stages, and ensuring the sales pipeline reflects real-time information.",
+                        responsibilities: [
+                            "Update contact records with new information",
+                            "Log calls, emails, and meetings in the CRM",
+                            "Move deals through pipeline stages",
+                            "Clean duplicate or outdated records",
+                            "Segment contacts for targeted campaigns",
+                            "Generate pipeline reports for sales teams",
+                            "Import and organize new lead lists"
+                        ],
+                        tools: [
+                            { name: "HubSpot CRM", desc: "Free tier, user-friendly" },
+                            { name: "Salesforce", desc: "Enterprise-grade CRM" },
+                            { name: "Pipedrive", desc: "Visual sales pipeline" },
+                            { name: "Zoho CRM", desc: "Affordable all-in-one" },
+                            { name: "Airtable", desc: "Flexible database + CRM hybrid" },
+                            { name: "Notion", desc: "Lightweight CRM for small teams" }
+                        ],
+                        workflow: [
+                            "Review yesterday's activities — log any missed interactions",
+                            "Update deal stages — move prospects based on latest contact",
+                            "Data cleanup — merge duplicates, fix formatting",
+                            "Add new leads — import from forms, email, or LinkedIn",
+                            "Generate reports — pipeline value, conversion rates",
+                            "Notify sales team — flag hot leads or stalled deals"
+                        ],
+                        tips: "Always verify data accuracy before importing. Use automation rules to reduce manual entry. Create custom views for different team members. Schedule weekly data audits.",
+                        timeEstimate: "1-3 hours per day depending on sales volume",
+                        valueProposition: "Clean CRM data increases sales conversion by 30%+. Accurate pipelines enable better forecasting and resource allocation."
+                    }
+                },
+                {
+                    name: "Automation Setup",
+                    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+                    color: "bg-accent/10 text-accent",
+                    frequency: "Weekly / Project-based",
+                    difficulty: "Advanced",
+                    details: {
+                        overview: "Automation Setup involves connecting apps and creating workflows that eliminate repetitive manual tasks. This is where IT/CS students shine — turning manual processes into self-running systems.",
+                        responsibilities: [
+                            "Map out repetitive business processes",
+                            "Build Zapier / Make workflows between apps",
+                            "Set up email automation sequences",
+                            "Create auto-responders and chatbots",
+                            "Build custom integrations using APIs",
+                            "Document automation logic for the team",
+                            "Monitor and troubleshoot broken workflows"
+                        ],
+                        tools: [
+                            { name: "Zapier", desc: "No-code automation platform" },
+                            { name: "Make (Integromat)", desc: "Visual workflow builder" },
+                            { name: "n8n", desc: "Self-hosted automation" },
+                            { name: "Google Apps Script", desc: "Custom Google Workspace scripts" },
+                            { name: "Airtable Automations", desc: "Built-in database triggers" },
+                            { name: "HubSpot Workflows", desc: "Marketing & sales automation" }
+                        ],
+                        workflow: [
+                            "Discovery — identify repetitive tasks eating up time",
+                            "Mapping — document the current manual process step-by-step",
+                            "Tool selection — choose the right automation platform",
+                            "Build — create the workflow with proper error handling",
+                            "Test — run scenarios to ensure data flows correctly",
+                            "Deploy — activate and monitor for 48 hours",
+                            "Document — create SOPs for future maintenance"
+                        ],
+                        tips: "Start simple — one trigger, one action. Always include error handling and notification steps. Test with sample data before going live. Version-control your complex workflows.",
+                        timeEstimate: "2-10 hours per automation project",
+                        valueProposition: "One automation can save 10+ hours per week. Clients pay premium rates ($50-150/hr) for VAs who can build and maintain automated systems."
+                    }
+                },
+                {
+                    name: "Social Media Scheduling",
+                    icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
+                    color: "bg-pink-500/10 text-pink-400",
+                    frequency: "Daily / Weekly",
+                    difficulty: "Beginner",
+                    details: {
+                        overview: "Social Media Scheduling involves planning, creating, and publishing content across platforms at optimal times. You maintain brand consistency while maximizing engagement and reach.",
+                        responsibilities: [
+                            "Create and curate content calendars",
+                            "Design graphics and write captions",
+                            "Schedule posts across multiple platforms",
+                            "Research trending hashtags and topics",
+                            "Monitor engagement and respond to comments",
+                            "Repurpose content for different platforms",
+                            "Analyze performance metrics and adjust strategy"
+                        ],
+                        tools: [
+                            { name: "Buffer", desc: "Simple multi-platform scheduling" },
+                            { name: "Hootsuite", desc: "Enterprise social management" },
+                            { name: "Later", desc: "Visual Instagram planner" },
+                            { name: "Meta Business Suite", desc: "Facebook/Instagram native" },
+                            { name: "Canva", desc: "Social media graphic design" },
+                            { name: "CapCut", desc: "Video editing for Reels/TikTok" }
+                        ],
+                        workflow: [
+                            "Monday planning — review analytics from last week",
+                            "Content creation — design graphics, write captions (2-3 hrs)",
+                            "Scheduling — queue posts for the week across platforms",
+                            "Daily monitoring — check notifications, respond to comments (30 min)",
+                            "Engagement — interact with followers and industry accounts",
+                            "Weekly report — compile metrics, suggest improvements"
+                        ],
+                        tips: "Batch-create content in themed blocks. Use platform-native features (Reels, Stories, Carousels) for better reach. Maintain a consistent brand voice and visual identity.",
+                        timeEstimate: "5-10 hours per week per brand",
+                        valueProposition: "Consistent social presence builds brand authority. A well-managed account can generate leads worth thousands monthly."
+                    }
+                },
+                {
+                    name: "Research",
+                    icon: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
+                    color: "bg-green-500/10 text-green-400",
+                    frequency: "As Needed",
+                    difficulty: "Beginner",
+                    details: {
+                        overview: "Research tasks involve gathering, analyzing, and presenting information on competitors, markets, trends, or specific topics. You become the client's intelligence arm, saving them hours of investigation.",
+                        responsibilities: [
+                            "Competitor analysis and benchmarking",
+                            "Market trend research and reporting",
+                            "Prospect list building and lead research",
+                            "Product and pricing comparisons",
+                            "Industry news curation and summaries",
+                            "Travel and event research",
+                            "Vendor and supplier evaluation"
+                        ],
+                        tools: [
+                            { name: "Google Workspace", desc: "Docs, Sheets, Search operators" },
+                            { name: "Notion", desc: "Research database and notes" },
+                            { name: "Airtable", desc: "Structured research databases" },
+                            { name: "Apollo.io", desc: "B2B prospect research" },
+                            { name: "SEMrush", desc: "SEO and competitor research" },
+                            { name: "ChatGPT / Claude", desc: "AI-assisted research synthesis" }
+                        ],
+                        workflow: [
+                            "Define scope — clarify exactly what the client needs",
+                            "Source identification — find credible data sources",
+                            "Data collection — gather information systematically",
+                            "Analysis — identify patterns, insights, and gaps",
+                            "Synthesis — compile findings into actionable format",
+                            "Presentation — create summary report with key takeaways",
+                            "Delivery — share via preferred channel with context"
+                        ],
+                        tips: "Always cite sources. Use advanced Google search operators for precision. Create reusable research templates. Summarize complex findings into executive summaries.",
+                        timeEstimate: "2-8 hours per research project",
+                        valueProposition: "Quality research enables data-driven decisions. A single competitor analysis can reveal opportunities worth thousands in revenue."
+                    }
+                },
+                {
+                    name: "Website Updates",
+                    icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+                    color: "bg-orange-500/10 text-orange-400",
+                    frequency: "Weekly / As Needed",
+                    difficulty: "Intermediate",
+                    details: {
+                        overview: "Website Updates involve maintaining and improving a client's web presence — from simple content edits to plugin updates, performance optimization, and basic troubleshooting.",
+                        responsibilities: [
+                            "Update text, images, and page content",
+                            "Publish blog posts and landing pages",
+                            "Install and configure plugins/apps",
+                            "Optimize images and page speed",
+                            "Fix broken links and formatting issues",
+                            "Update product listings and pricing",
+                            "Monitor uptime and basic security"
+                        ],
+                        tools: [
+                            { name: "WordPress", desc: "Most popular CMS platform" },
+                            { name: "Shopify", desc: "E-commerce website builder" },
+                            { name: "Webflow", desc: "No-code visual development" },
+                            { name: "Squarespace", desc: "Drag-and-drop website builder" },
+                            { name: "Elementor", desc: "WordPress page builder" },
+                            { name: "GTmetrix", desc: "Page speed analysis" }
+                        ],
+                        workflow: [
+                            "Backup — always backup before making changes",
+                            "Staging — test changes on staging site first",
+                            "Update — make content or code changes",
+                            "Review — check changes across desktop and mobile",
+                            "SEO check — verify meta tags, alt text, URLs",
+                            "Publish — push live and verify functionality",
+                            "Monitor — check for 24 hours post-update"
+                        ],
+                        tips: "Never edit the live site without a backup. Use a staging environment for major changes. Keep plugins/themes updated for security. Document all changes in a changelog.",
+                        timeEstimate: "1-5 hours per update session",
+                        valueProposition: "A well-maintained website converts better and ranks higher. Technical VAs who can handle both content and code are premium hires."
+                    }
+                },
+                {
+                    name: "Reporting",
+                    icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
+                    color: "bg-cyan-500/10 text-cyan-400",
+                    frequency: "Weekly / Monthly",
+                    difficulty: "Intermediate",
+                    details: {
+                        overview: "Reporting involves collecting data from various sources, analyzing performance metrics, and creating visual dashboards or written summaries that help clients make informed business decisions.",
+                        responsibilities: [
+                            "Pull data from analytics platforms",
+                            "Create performance dashboards",
+                            "Track KPIs against goals",
+                            "Identify trends and anomalies",
+                            "Compile weekly/monthly summary reports",
+                            "Visualize data with charts and graphs",
+                            "Recommend actions based on insights"
+                        ],
+                        tools: [
+                            { name: "Google Analytics", desc: "Website traffic analytics" },
+                            { name: "Google Data Studio", desc: "Custom dashboard builder" },
+                            { name: "Tableau", desc: "Advanced data visualization" },
+                            { name: "Notion", desc: "Report documentation" },
+                            { name: "Excel / Sheets", desc: "Data analysis and pivot tables" },
+                            { name: "Databox", desc: "Automated KPI dashboards" }
+                        ],
+                        workflow: [
+                            "Data collection — pull metrics from all relevant platforms",
+                            "Cleaning — remove outliers, standardize formats",
+                            "Analysis — compare against benchmarks and previous periods",
+                            "Visualization — create charts, graphs, and scorecards",
+                            "Narrative — write insights explaining what the data means",
+                            "Review — verify accuracy and relevance",
+                            "Delivery — present via email, meeting, or dashboard"
+                        ],
+                        tips: "Focus on insights, not just numbers. Use consistent reporting templates. Automate data pulls where possible. Always tie metrics back to business goals.",
+                        timeEstimate: "2-6 hours per comprehensive report",
+                        valueProposition: "Data-driven decisions outperform gut feelings. A good report can reveal $10K+ in missed opportunities or cost savings."
+                    }
+                },
+                {
+                    name: "Client Communication",
+                    icon: "M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z",
+                    color: "bg-yellow-500/10 text-yellow-400",
+                    frequency: "Daily",
+                    difficulty: "Beginner",
+                    details: {
+                        overview: "Client Communication is the glue that holds the VA-client relationship together. You manage expectations, provide updates, handle inquiries, and ensure the client feels supported and informed at all times.",
+                        responsibilities: [
+                            "Daily/weekly status updates",
+                            "Meeting scheduling and coordination",
+                            "Responding to client questions promptly",
+                            "Escalating urgent issues",
+                            "Managing client expectations on timelines",
+                            "Documenting decisions and action items",
+                            "Building rapport and trust over time"
+                        ],
+                        tools: [
+                            { name: "Slack", desc: "Real-time team communication" },
+                            { name: "Zoom", desc: "Video meetings and screen share" },
+                            { name: "Loom", desc: "Async video messaging" },
+                            { name: "Calendly", desc: "Meeting scheduling" },
+                            { name: "Notion", desc: "Shared documentation hub" },
+                            { name: "WhatsApp / Telegram", desc: "Quick mobile communication" }
+                        ],
+                        workflow: [
+                            "Morning check-in — brief message on today's priorities",
+                            "Availability — confirm you're online and reachable",
+                            "Progress updates — share completed tasks mid-day",
+                            "End-of-day summary — list accomplishments and blockers",
+                            "Weekly review — comprehensive status report every Friday",
+                            "Monthly retrospective — discuss wins, challenges, and goals"
+                        ],
+                        tips: "Over-communicate early in the relationship. Use video messages for complex explanations. Always confirm understanding before acting. Set clear response time expectations.",
+                        timeEstimate: "30 min - 1 hour daily for communication",
+                        valueProposition: "Trust is everything in remote work. Excellent communication reduces client anxiety, prevents misunderstandings, and leads to long-term retainers."
+                    }
+                }
+            ];
+
+            const getDifficultyColor = (diff) => {
+                switch(diff) {
+                    case 'Beginner': return 'text-green-400 bg-green-500/10';
+                    case 'Intermediate': return 'text-yellow-400 bg-yellow-500/10';
+                    case 'Advanced': return 'text-red-400 bg-red-500/10';
+                    default: return 'text-blue-400 bg-blue-500/10';
+                }
+            };
+
+            return (
+                <section id="tasks" className="py-24 relative">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal">
+                            <div className="inline-block px-4 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-6">
+                                DAILY OPERATIONS
+                            </div>
+                            <h2 className="font-poppins font-bold text-3xl md:text-5xl mb-4">
+                                Common <span className="text-accent">VA Tasks</span>
+                            </h2>
+                            <p className="text-text-secondary max-w-2xl mx-auto text-lg">
+                                Click any card to explore detailed workflows, tools, and best practices
+                            </p>
+                        </div>
+
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+                            {tasks.map((task, i) => (
+                                <div 
+                                    key={i} 
+                                    className="glass-card p-6 rounded-2xl reveal group cursor-pointer hover:scale-105 transition-all duration-300"
+                                    style={{transitionDelay: `${(i % 4) * 100}ms`}}
+                                    onClick={() => setActiveTaskModal(task)}
+                                >
+                                    <div className="flex items-start justify-between mb-4">
+                                        <div className={`w-12 h-12 rounded-xl ${task.color} flex items-center justify-center`}>
+                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={task.icon} />
+                                            </svg>
+                                        </div>
+                                        <div className="flex flex-col items-end gap-1">
+                                            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${getDifficultyColor(task.difficulty)}`}>
+                                                {task.difficulty}
+                                            </span>
+                                            <span className="text-xs text-text-secondary">{task.frequency}</span>
+                                        </div>
+                                    </div>
+                                    <h3 className="font-space font-bold mb-2 group-hover:text-accent transition-colors">{task.name}</h3>
+                                    <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden mb-3">
+                                        <div className="h-full bg-accent/50 rounded-full" style={{width: `${60 + (i * 5)}%`}}></div>
+                                    </div>
+                                    <div className="flex items-center gap-1 text-xs text-text-secondary group-hover:text-accent transition-colors">
+                                        <span>Click for details</span>
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Workflow Simulation */}
+                        <div className="glass-card p-8 rounded-3xl reveal">
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="font-space text-xl font-bold">Daily Workflow Simulation</h3>
+                                <span className="text-xs text-text-secondary bg-white/5 px-3 py-1 rounded-full">ClickUp Style</span>
+                            </div>
+
+                            <div className="space-y-3">
+                                {[
+                                    { time: "8:00 AM", task: "Check & prioritize emails", status: "Done", color: "bg-green-500" },
+                                    { time: "9:30 AM", task: "Update CRM pipeline", status: "In Progress", color: "bg-accent" },
+                                    { time: "11:00 AM", task: "Social media content scheduling", status: "Pending", color: "bg-blue-500" },
+                                    { time: "1:00 PM", task: "Client meeting (Zoom)", status: "Upcoming", color: "bg-purple-500" },
+                                    { time: "3:00 PM", task: "Automation workflow setup", status: "Pending", color: "bg-blue-500" },
+                                    { time: "5:00 PM", task: "Daily reporting & handoff", status: "Pending", color: "bg-blue-500" }
+                                ].map((item, i) => (
+                                    <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                                        <div className="w-16 text-sm text-text-secondary font-mono">{item.time}</div>
+                                        <div className="flex-1 font-medium">{item.task}</div>
+                                        <div className="flex items-center gap-2">
+                                            <span className={`w-2 h-2 rounded-full ${item.color}`}></span>
+                                            <span className="text-xs text-text-secondary">{item.status}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Task Detail Modal */}
+                    {activeTaskModal && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay" onClick={() => setActiveTaskModal(null)}>
+                            <div className="glass modal-content w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 md:p-10 border border-accent/20" onClick={e => e.stopPropagation()}>
+                                <div className="flex items-start justify-between mb-8">
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-14 h-14 rounded-2xl ${activeTaskModal.color} flex items-center justify-center`}>
+                                            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={activeTaskModal.icon} />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 className="font-poppins text-2xl font-bold">{activeTaskModal.name}</h3>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${getDifficultyColor(activeTaskModal.difficulty)}`}>
+                                                    {activeTaskModal.difficulty}
+                                                </span>
+                                                <span className="text-xs text-text-secondary">{activeTaskModal.frequency}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        onClick={() => setActiveTaskModal(null)}
+                                        className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div className="space-y-8">
+                                    {/* Overview */}
+                                    <div className="glass-card p-6 rounded-2xl">
+                                        <h4 className="font-space font-bold text-lg mb-3 text-accent">Overview</h4>
+                                        <p className="text-text-secondary leading-relaxed">{activeTaskModal.details.overview}</p>
+                                    </div>
+
+                                    {/* Key Stats */}
+                                    <div className="grid md:grid-cols-3 gap-4">
+                                        <div className="glass-card p-5 rounded-xl text-center">
+                                            <div className="text-accent font-bold text-lg mb-1">{activeTaskModal.details.timeEstimate}</div>
+                                            <div className="text-xs text-text-secondary">Time Estimate</div>
+                                        </div>
+                                        <div className="glass-card p-5 rounded-xl text-center">
+                                            <div className="text-accent font-bold text-lg mb-1">{activeTaskModal.frequency}</div>
+                                            <div className="text-xs text-text-secondary">Frequency</div>
+                                        </div>
+                                        <div className="glass-card p-5 rounded-xl text-center">
+                                            <div className="text-accent font-bold text-lg mb-1">{activeTaskModal.difficulty}</div>
+                                            <div className="text-xs text-text-secondary">Difficulty</div>
+                                        </div>
+                                    </div>
+
+                                    {/* Responsibilities */}
+                                    <div className="glass-card p-6 rounded-2xl">
+                                        <h4 className="font-space font-bold text-lg mb-4 text-accent">Key Responsibilities</h4>
+                                        <div className="grid md:grid-cols-2 gap-3">
+                                            {activeTaskModal.details.responsibilities.map((resp, i) => (
+                                                <div key={i} className="flex items-start gap-3 p-3 rounded-xl bg-white/5">
+                                                    <span className="w-5 h-5 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <span className="text-accent text-xs font-bold">{i + 1}</span>
+                                                    </span>
+                                                    <span className="text-sm text-text-secondary">{resp}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Tools */}
+                                    <div className="glass-card p-6 rounded-2xl">
+                                        <h4 className="font-space font-bold text-lg mb-4 text-accent">Recommended Tools</h4>
+                                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                            {activeTaskModal.details.tools.map((tool, i) => (
+                                                <div key={i} className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5">
+                                                    <div className="font-semibold text-sm mb-1">{tool.name}</div>
+                                                    <div className="text-xs text-text-secondary">{tool.desc}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Workflow */}
+                                    <div className="glass-card p-6 rounded-2xl">
+                                        <h4 className="font-space font-bold text-lg mb-4 text-accent">Typical Workflow</h4>
+                                        <div className="space-y-3">
+                                            {activeTaskModal.details.workflow.map((step, i) => (
+                                                <div key={i} className="flex items-center gap-4">
+                                                    <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                                                        <span className="text-accent text-xs font-bold">{i + 1}</span>
+                                                    </div>
+                                                    <div className="flex-1 p-3 rounded-xl bg-white/5 text-sm">{step}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Pro Tips */}
+                                    <div className="glass-card p-6 rounded-2xl border-accent/20">
+                                        <h4 className="font-space font-bold text-lg mb-3 text-accent flex items-center gap-2">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
+                                            Pro Tips
+                                        </h4>
+                                        <p className="text-text-secondary leading-relaxed">{activeTaskModal.details.tips}</p>
+                                    </div>
+
+                                    {/* Value Proposition */}
+                                    <div className="glass-card p-6 rounded-2xl bg-accent/5 border-accent/10">
+                                        <h4 className="font-space font-bold text-lg mb-3 text-accent">Why This Matters to Clients</h4>
+                                        <p className="text-text-secondary leading-relaxed">{activeTaskModal.details.valueProposition}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </section>
+            );
+        };
+
+        // Reality Check Section
+        const RealitySection = () => {
+            const advantages = [
+                { title: "Work From Home", desc: "Eliminate commute, design your workspace" },
+                { title: "Foreign Currency", desc: "Earn USD while spending PHP" },
+                { title: "Flexible Schedule", desc: "Choose your working hours" },
+                { title: "Unlimited Growth", desc: "No ceiling on income potential" },
+                { title: "Global Opportunities", desc: "Access worldwide client base" }
+            ];
+
+            const realities = [
+                { title: "Rejections", desc: "You will hear 'no' often at the start" },
+                { title: "Competition", desc: "Global talent pool is vast" },
+                { title: "Self-Discipline", desc: "No boss means you manage yourself" },
+                { title: "Inconsistent Income", desc: "First 3-6 months are unstable" },
+                { title: "Portfolio Building", desc: "You need proof before premium rates" }
+            ];
+
+            return (
+                <section id="reality" className="py-24 relative grid-bg">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal">
+                            <div className="inline-block px-4 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-6">
+                                THE TRUTH
+                            </div>
+                            <h2 className="font-poppins font-bold text-3xl md:text-5xl mb-4">
+                                Facts & <span className="text-accent">Reality Check</span>
+                            </h2>
+                        </div>
+
+                        <div className="grid lg:grid-cols-2 gap-8">
+                            <div className="reveal">
+                                <h3 className="font-space text-2xl font-bold mb-8 flex items-center gap-3">
+                                    <span className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
+                                        <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </span>
+                                    Advantages
+                                </h3>
+                                <div className="space-y-4">
+                                    {advantages.map((adv, i) => (
+                                        <div key={i} className="advantage-card p-5 rounded-2xl reveal" style={{transitionDelay: `${i * 100}ms`}}>
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-bold text-accent">{adv.title}</h4>
+                                                    <p className="text-sm text-text-secondary">{adv.desc}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="reveal">
+                                <h3 className="font-space text-2xl font-bold mb-8 flex items-center gap-3">
+                                    <span className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center">
+                                        <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                        </svg>
+                                    </span>
+                                    Reality Check
+                                </h3>
+                                <div className="space-y-4">
+                                    {realities.map((real, i) => (
+                                        <div key={i} className="warning-card p-5 rounded-2xl reveal" style={{transitionDelay: `${i * 100}ms`}}>
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400">
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-bold text-red-400">{real.title}</h4>
+                                                    <p className="text-sm text-text-secondary">{real.desc}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Progress Graph */}
+                        <div className="mt-16 glass-card p-8 rounded-3xl reveal">
+                            <h3 className="font-space text-xl font-bold mb-6 text-center">Realistic Income Progression</h3>
+                            <div className="relative h-64 flex items-end justify-between gap-2 md:gap-4 px-4">
+                                {[
+                                    { month: "Month 1", amount: 200, label: "$200" },
+                                    { month: "Month 3", amount: 600, label: "$600" },
+                                    { month: "Month 6", amount: 1200, label: "$1.2K" },
+                                    { month: "Month 9", amount: 1800, label: "$1.8K" },
+                                    { month: "Year 1", amount: 2500, label: "$2.5K" },
+                                    { month: "Year 2", amount: 4000, label: "$4K" },
+                                    { month: "Year 3+", amount: 6000, label: "$6K+" }
+                                ].map((bar, i) => (
+                                    <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                                        <div className="text-xs text-accent font-bold">{bar.label}</div>
+                                        <div 
+                                            className="w-full bg-accent/20 rounded-t-lg relative overflow-hidden"
+                                            style={{height: `${(bar.amount / 6000) * 100}%`, minHeight: '20px'}}
+                                        >
+                                            <div className="absolute inset-0 bg-gradient-to-t from-accent/40 to-accent/10"></div>
+                                        </div>
+                                        <div className="text-xs text-text-secondary">{bar.month}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Payment Section
+        const PaymentSection = () => {
+            const methods = [
+                { name: "Wise", fee: "0.5-1%", speed: "1-2 days", color: "bg-green-500" },
+                { name: "PayPal", fee: "2.9% + fixed", speed: "Instant", color: "bg-blue-500" },
+                { name: "Payoneer", fee: "1-3%", speed: "2-5 days", color: "bg-red-500" },
+                { name: "GCash", fee: "Free*", speed: "Instant", color: "bg-blue-400" },
+                { name: "Maya", fee: "Free*", speed: "Instant", color: "bg-yellow-500" },
+                { name: "Bank Transfer", fee: "$15-50", speed: "3-7 days", color: "bg-purple-500" }
+            ];
+
+            return (
+                <section id="payment" className="py-24 relative">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal">
+                            <div className="inline-block px-4 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-6">
+                                GETTING PAID
+                            </div>
+                            <h2 className="font-poppins font-bold text-3xl md:text-5xl mb-4">
+                                How <span className="text-accent">VAs Get Paid</span>
+                            </h2>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                            {methods.map((method, i) => (
+                                <div key={i} className="glass-card p-6 rounded-2xl reveal" style={{transitionDelay: `${(i % 3) * 100}ms`}}>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h3 className="font-space text-lg font-bold">{method.name}</h3>
+                                        <div className={`w-3 h-3 rounded-full ${method.color}`}></div>
+                                    </div>
+                                    <div className="space-y-2 text-sm">
+                                        <div className="flex justify-between">
+                                            <span className="text-text-secondary">Fee</span>
+                                            <span className="font-medium">{method.fee}</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-text-secondary">Speed</span>
+                                            <span className="font-medium">{method.speed}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Payment Flow */}
+                        <div className="glass-card p-8 rounded-3xl reveal">
+                            <h3 className="font-space text-xl font-bold mb-8 text-center">Payment Flow Visualization</h3>
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div className="text-center p-6 rounded-2xl bg-white/5 flex-1">
+                                    <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
+                                        <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                        </svg>
+                                    </div>
+                                    <div className="font-bold">Foreign Client</div>
+                                    <div className="text-xs text-text-secondary">USA / UK / AU</div>
+                                </div>
+
+                                <svg className="w-8 h-8 text-accent hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                                <svg className="w-8 h-8 text-accent md:hidden rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+
+                                <div className="text-center p-6 rounded-2xl bg-accent/5 border border-accent/20 flex-1">
+                                    <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-3">
+                                        <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                        </svg>
+                                    </div>
+                                    <div className="font-bold text-accent">Payment Platform</div>
+                                    <div className="text-xs text-text-secondary">Wise / PayPal / Payoneer</div>
+                                </div>
+
+                                <svg className="w-8 h-8 text-accent hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                                <svg className="w-8 h-8 text-accent md:hidden rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+
+                                <div className="text-center p-6 rounded-2xl bg-white/5 flex-1">
+                                    <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
+                                        <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div className="font-bold">You (Philippines)</div>
+                                    <div className="text-xs text-text-secondary">GCash / Bank / Maya</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Salary Table Section
+        const SalarySection = () => {
+            const salaries = [
+                { role: "General VA", usd: "$500 - $1,500", php: "₱28K - ₱84K", demand: 60, growth: 50 },
+                { role: "Social Media Manager", usd: "$800 - $3,000", php: "₱45K - ₱168K", demand: 90, growth: 85 },
+                { role: "Executive Assistant", usd: "$1,000 - $3,500", php: "₱56K - ₱196K", demand: 75, growth: 70 },
+                { role: "Web Dev VA", usd: "$1,200 - $4,000", php: "₱67K - ₱224K", demand: 95, growth: 90 },
+                { role: "Automation VA", usd: "$1,500 - $5,000", php: "₱84K - ₱280K", demand: 98, growth: 95 },
+                { role: "AI Tools VA", usd: "$1,500 - $6,000", php: "₱84K - ₱336K", demand: 100, growth: 100 },
+                { role: "CRM VA", usd: "$900 - $2,800", php: "₱50K - ₱157K", demand: 80, growth: 75 }
+            ];
+
+            return (
+                <section id="salary" className="py-24 relative grid-bg">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal">
+                            <div className="inline-block px-4 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-6">
+                                COMPENSATION
+                            </div>
+                            <h2 className="font-poppins font-bold text-3xl md:text-5xl mb-4">
+                                VA <span className="text-accent">Salary Guide</span>
+                            </h2>
+                        </div>
+
+                        <div className="glass-card rounded-3xl overflow-hidden reveal">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="border-b border-white/10">
+                                            <th className="text-left p-6 font-space text-accent">Role</th>
+                                            <th className="text-left p-6 font-space text-accent">USD/Month</th>
+                                            <th className="text-left p-6 font-space text-accent">PHP/Month</th>
+                                            <th className="text-left p-6 font-space text-accent">Demand</th>
+                                            <th className="text-left p-6 font-space text-accent">Growth</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {salaries.map((s, i) => (
+                                            <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                                <td className="p-6 font-medium">{s.role}</td>
+                                                <td className="p-6 text-accent font-bold">{s.usd}</td>
+                                                <td className="p-6 text-text-secondary">{s.php}</td>
+                                                <td className="p-6">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-24 h-2 bg-white/10 rounded-full overflow-hidden">
+                                                            <div className="h-full bg-accent rounded-full" style={{width: `${s.demand}%`}}></div>
+                                                        </div>
+                                                        <span className="text-xs text-text-secondary">{s.demand}%</span>
+                                                    </div>
+                                                </td>
+                                                <td className="p-6">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-24 h-2 bg-white/10 rounded-full overflow-hidden">
+                                                            <div className="h-full bg-green-500 rounded-full" style={{width: `${s.growth}%`}}></div>
+                                                        </div>
+                                                        <span className="text-xs text-text-secondary">{s.growth}%</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Closing Section
+        const ClosingSection = () => {
+            return (
+                <section id="closing" className="py-32 relative">
+                    <div className="max-w-5xl mx-auto px-6 text-center">
+                        <div className="reveal">
+                            <div className="inline-block px-4 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold mb-8">
+                                FINAL WORDS
+                            </div>
+
+                            <h2 className="font-poppins font-black text-4xl md:text-6xl lg:text-7xl leading-tight mb-8">
+                                "The world does not pay for your <span className="text-text-secondary">diploma</span>.<br />
+                                It pays for what you can <span className="text-accent text-glow">do</span> and <span className="text-accent text-glow">prove</span>."
+                            </h2>
+
+                            <p className="text-text-secondary text-xl mb-12 max-w-3xl mx-auto">
+                                Your technical background is not just relevant — it is your unfair advantage in the global digital economy.
+                            </p>
+
+                            <div className="flex flex-wrap justify-center gap-4 mb-16">
+                                <a href="#niches" className="px-8 py-4 bg-accent text-matte font-bold rounded-full hover:bg-accent-dim transition-all duration-300 hover:scale-105 glow-yellow-strong">
+                                    Start Your VA Journey
+                                </a>
+                                <a href="#career" className="px-8 py-4 glass text-white font-bold rounded-full hover:border-accent/40 transition-all duration-300 hover:scale-105">
+                                    Build Your Portfolio
+                                </a>
+                                <a href="#hero" className="px-8 py-4 glass text-white font-bold rounded-full hover:border-accent/40 transition-all duration-300 hover:scale-105">
+                                    Connect With Ferdinand
+                                </a>
+                            </div>
+
+                            <div className="glass-card p-8 rounded-3xl inline-block">
+                                <div className="flex items-center justify-center gap-6">
+                                    <a href="#" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent/20 hover:text-accent transition-all">
+                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="#" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent/20 hover:text-accent transition-all">
+                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="#" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent/20 hover:text-accent transition-all">
+                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="#" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent/20 hover:text-accent transition-all">
+                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Footer
+        const Footer = () => {
+            return (
+                <footer className="py-12 border-t border-white/5">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="text-center md:text-left">
+                                <div className="font-poppins font-bold text-xl mb-1">
+                                    <span className="text-accent">F</span>erdinand <span className="text-accent">C</span>ortel
+                                </div>
+                                <div className="text-sm text-text-secondary">VA | Social Media Manager | Digital Professional</div>
+                            </div>
+
+                            <div className="text-center md:text-right">
+                                <div className="text-sm text-text-secondary">
+                                    © 2026 Ferdinand Cortel. All rights reserved.
+                                </div>
+                                <div className="text-xs text-text-secondary/50 mt-1">
+                                    Built for the next generation of digital professionals.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            );
+        };
+
+        // Main App
+        const App = () => {
+            useEffect(() => {
+                // Intersection Observer for scroll reveals
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+                document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+                return () => observer.disconnect();
+            }, []);
+
+            return (
+                <div className="min-h-screen bg-matte text-white">
+                    <ParticleBackground />
+                    <div className="content-layer">
+                        <Navigation />
+                        <HeroSection />
+                        <IntroSection />
+                        <WhatIsVASection />
+                        <NichesSection />
+                        <CareerPathSection />
+                        <TasksSection />
+                        <RealitySection />
+                        <PaymentSection />
+                        <SalarySection />
+                        <ClosingSection />
+                        <Footer />
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
